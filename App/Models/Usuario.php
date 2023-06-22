@@ -31,10 +31,62 @@ class Usuario extends Model {
     }
 
     function Validar(){
+        $validado = true;
 
+        if(strlen($this->__get("nome")) < 3 ){
+            $validado = false;
+        }
+        if(strlen($this->__get("email")) < 3 ){
+            $validado = false;
+        }
+        if(strlen($this->__get("senha")) < 5 ){
+            $validado = false;
+        }
+
+        return $validado;
     }
 
-    function
+    public function getUsuarios(){
+        $query = '
+        select 
+            id, nome 
+        from 
+            usuarios 
+        where 
+            nome like :nome and id != :id;
+        ';
+        $smtm = $this->db->prepare($query);
+        $smtm->bindValue(":nome", '%'.$this->__get("nome").'%');
+        $smtm->bindValue(":id", $this->__get("id"));
+        $smtm->execute();
+
+        return $smtm->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function autenticar(){
+        $query = 'select id, nome, email from usuarios where email = :email and senha = :senha;';
+        $smtm = $this->db->prepare($query);
+        $smtm->bindValue(":email", $this->__get("email"));
+        $smtm->bindValue(":senha", $this->__get("senha"));
+        $smtm->execute();
+        $resultado = $smtm->Fetch(\PDO::FETCH_ASSOC);
+
+        echo"<pre>";
+        print_r($resultado);
+        echo"</pre>";
+
+        $this->__set("nome", $resultado['nome']);
+        $this->__set("id", $resultado['id']);
+    }
+
+    public function GetUsuariosEmail(){
+        $query = 'select nome, email, senha from usuarios where email = :email;';
+        $smtm = $this->db->prepare($query);
+        $smtm->bindValue(":email", $this->__get("email"));
+        $smtm->execute();
+
+        return $smtm->FetchAll(\PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

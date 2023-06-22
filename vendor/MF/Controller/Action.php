@@ -21,6 +21,11 @@ abstract class Action{
         $this->view->page = $view;
         require_once "../App/Views/layout.phtml";
     }
+
+    protected function VerificarAutenticacao(){
+        session_start();
+        if(!isset($_SESSION['id']) || !isset($_SESSION['nome'])){ header("location: /"); return;}
+    }
 }
 
 ?>
