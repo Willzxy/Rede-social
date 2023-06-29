@@ -18,15 +18,15 @@
             
             <form action="/registrar" method="post">
               <div class="form-group">
-                <input type="text" value="<?php echo $this->view->nome; ?>" name='nome' class="form-control" placeholder="Nome">
+                <input type="text" autocomplete="off" value="<?= $this->view->nome; ?>" name='nome' class="form-control" placeholder="Nome">
               </div>
               
               <div class="form-group">
-                <input type="text" value="<?php echo $this->view->email; ?>" name='email' class="form-control" placeholder="E-mail">
+                <input type="text" autocomplete="off" value="<?= $this->view->email; ?>" name='email' class="form-control" placeholder="E-mail">
               </div>
 
               <div class="form-group">
-                <input type="password" value="<?php echo $this->view->senha; ?>" name='senha' class="form-control" placeholder="Senha">
+                <input type="password" autocomplete="off" value="<?= $this->view->senha; ?>" name='senha' class="form-control" placeholder="Senha">
               </div>
               
               <div class="mt-4 mb-4">

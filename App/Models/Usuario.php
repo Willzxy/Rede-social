@@ -46,14 +46,49 @@ class Usuario extends Model {
         return $validado;
     }
 
+    public function getTweets(){
+        $query = 'select count(*) as tweets from tweets where id_usuario = :id;';
+        $smtm = $this->db->prepare($query);
+        $smtm->bindValue(":id", $this->__get("id"));
+        $smtm->execute();
+
+        return $smtm->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function getSeguindo(){
+        $query = 'select count(*) as seguindo from seguidores where id_usuario = :id;';
+        $smtm = $this->db->prepare($query);
+        $smtm->bindValue(":id", $this->__get("id"));
+        $smtm->execute();
+
+        return $smtm->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function getSeguidores(){
+        $query = 'select count(*) as seguidores from seguidores where id_seguindo = :id;';
+        $smtm = $this->db->prepare($query);
+        $smtm->bindValue(":id", $this->__get("id"));
+        $smtm->execute();
+
+        return $smtm->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function getUsuarios(){
         $query = '
         select 
-            id, nome 
+            u.id, u.nome, u.email,
+            (
+            select
+                count(*)
+            from
+                seguidores as s
+            where
+                s.id_usuario = :id and s.id_seguindo = u.id
+            ) as seguindo
         from 
-            usuarios 
+            usuarios as u
         where 
-            nome like :nome and id != :id;
+            nome like :nome and id != :id limit 8;
         ';
         $smtm = $this->db->prepare($query);
         $smtm->bindValue(":nome", '%'.$this->__get("nome").'%');

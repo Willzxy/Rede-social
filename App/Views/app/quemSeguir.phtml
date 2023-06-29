@@ -27,7 +27,7 @@
 					
 					<div class="row mt-2 mb-2">
 						<div class="col mb-2">
-							<span class="perfilPainelNome"><?php echo $_SESSION['nome']; ?></span>
+							<span class="perfilPainelNome"><?= $_SESSION['nome']; ?></span>
 						</div>
 					</div>
 
@@ -35,17 +35,17 @@
 
 						<div class="col">
 							<span class="perfilPainelItem">Tweets</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"> <?= $this->view->contTweets['tweets'] ?> </span>
 						</div>
 
 						<div class="col">
 							<span class="perfilPainelItem">Seguindo</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->seguindo['seguindo'] ?></span>
 						</div>
 
 						<div class="col">
 							<span class="perfilPainelItem">Seguidores</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->seguidores['seguidores'] ?></span>
 						</div>
 
 					</div>
@@ -63,7 +63,7 @@
 						<div class="card-body">
 							<form action='/quemSeguir' method='get'>
 								<div class="input-group mb-3">
-									<input name='procurar' type="text" class="form-control" placeholder="Quem você está procurando?">
+									<input autocomplete="off" name='procurar' type="text" class="form-control" placeholder="Quem você está procurando?">
 									<div class="input-group-append">
 										<button  class="btn btn-primary" type="submit">Procurar</button>
 									</div>
@@ -81,13 +81,23 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-6">
-										<?php echo $value['nome']  ?>
+										<?= $value['nome'] ?>
+										
+										<?php if($value['seguindo']) { ?>
+											<small class='seguindotxt'>Seguindo</small>
+										<?php } ?>
+
 									</div>
 								
 									<div class="col-md-6 d-flex justify-content-end">
 										<div>
-											<a href="/acao" class="btn btn-success">Seguir</a>
-											<a href="/acao"" class="btn btn-danger">Deixar de seguir</a>
+
+											<?php if(!$value['seguindo']) { ?>
+												<a href="/acao?id=<?= $value['id'] ?>&acao=follow&procurar=<?= $_GET['procurar']?>" class="btn btn-success">Seguir</a>
+											<?php }else { ?>
+												<a href="/acao?id=<?= $value['id'] ?>&acao=unfollow&procurar=<?= $_GET['procurar']?>" class="btn btn-danger">Deixar de seguir</a>
+											<?php } ?>
+
 										</div>
 									</div>
 								</div>

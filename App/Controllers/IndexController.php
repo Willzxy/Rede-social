@@ -38,9 +38,10 @@ class IndexController extends Action {
         if($usuario->validar()){
             $usuario->salvar();
 
-            header("location: /autenticar");
             $_POST['email'] = $usuario->__get("email");
             $_POST['senha'] = $usuario->__get("senha");
+            
+            header("location: /autenticar");
         } else {
             $this->view->erro_envio = true;
             $this->view->nome = $usuario->__get("nome");

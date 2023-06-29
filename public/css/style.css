@@ -184,3 +184,8 @@ h2 {
 .tweet:hover {
     background-color: #f5f8fa;
 }
+
+.seguindotxt {
+    font-size: 0.65em;
+    font-style: italic;
+}

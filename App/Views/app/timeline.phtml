@@ -27,7 +27,7 @@
 					
 					<div class="row mt-2 mb-2">
 						<div class="col mb-2">
-							<span class="perfilPainelNome"> <?php echo $_SESSION['nome']; ?>  </span>
+							<span class="perfilPainelNome"> <?= $_SESSION['nome']; ?>  </span>
 						</div>
 					</div>
 
@@ -35,17 +35,17 @@
 
 						<div class="col">
 							<span class="perfilPainelItem">Tweets</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"> <?= $this->view->contTweets['tweets'] ?> </span>
 						</div>
 
 						<div class="col">
 							<span class="perfilPainelItem">Seguindo</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->seguindo['seguindo'] ?></span>
 						</div>
 
 						<div class="col">
 							<span class="perfilPainelItem">Seguidores</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->seguidores['seguidores'] ?></span>
 						</div>
 
 					</div>
@@ -70,16 +70,21 @@
 			</div>
 
 			<?php foreach ($this->view->tweets as $id => $value) { ?>
-			
+
 				<div class="row tweet">
 					<div class="col">
-						<p><strong> <?php echo $value['nome']; ?> </strong> <small class="text text-muted">- <?php echo $value['data']; ?></small></p>
-						<p><?php echo $value['tweet']; ?></p>
+						<p><strong> <?= $value['nome']; ?> </strong> <small class="text text-muted">- <?= $value['data']; ?></small></p>
+						<p><?= $value['tweet']; ?></p>
 
 						<br />
-						<form>
+						<form action='/acao'>
 							<div class="col d-flex justify-content-end">
-								<button type="submit" class="btn btn-danger"><small>Remover</small></button>
+								<?php if($value['id_usuario'] == $_SESSION['id']) { ?>
+									<input type="hidden" name='id' value=<?= $value['id'] ?>>
+									<input type="hidden" name='acao' value='removetweet'>
+
+									<button type="submit" class="btn btn-danger"><small>Remover</small></button>
+								<?php } ?>
 							</div>
 						</form>
 					</div>

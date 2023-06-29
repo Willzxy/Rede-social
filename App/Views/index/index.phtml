@@ -24,15 +24,20 @@
 		<form method='post' action='/autenticar'>
 			<div class="row">
 				<div class="col">
-					<input type="text" name='email' class="form-control" placeholder="E-mail">
+					<input autocomplete="off" type="text" name='email' class="form-control" placeholder="E-mail">
 				</div>
 				<div class="col">
-					<input type="password" name='senha' class="form-control" placeholder="Senha">
+					<input autocomplete="off" type="password" name='senha' class="form-control" placeholder="Senha">
 				</div>
 				<div class="col-auto">
 					<button type="submit" class="btn btn-primary mb-2">Entrar</button>
 				</div>
 			</div>
+
+			<?php if(isset($_GET['login']) && $_GET['login'] == 'erro') { ?>
+				<small class='form-text text-danger'>Erro durante a autenticação! Tente novamente</small>
+			<?php } ?>
+
 		</form>
 
 		<div class="row pt-5 pl-5 pr-5">

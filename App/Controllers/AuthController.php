@@ -28,7 +28,7 @@ class AuthController extends action {
 
             header("location: /timeline");
         }else{
-            header("location: /?login='erro'");
+            header("location: /?login=erro");
         }
 
     }
